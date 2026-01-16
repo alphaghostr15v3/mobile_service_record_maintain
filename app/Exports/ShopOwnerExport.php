@@ -54,11 +54,12 @@ class ShopOwnerExport implements FromQuery, WithHeadings, WithMapping
             'Name',
             'Aadhar Number',
             'Mobile Number',
-            'Mobile Name',
+            'Device',
             'Work',
-            'IMEI Number',
+            'IMEI',
+            'Document',
             'Date',
-            'Device Status',
+            'Status',
             'Created At'
         ];
     }
@@ -73,6 +74,7 @@ class ShopOwnerExport implements FromQuery, WithHeadings, WithMapping
             $owner->mobile_name,
             $owner->work,
             $owner->imei_number,
+            $owner->document ? 'Uploaded' : 'None',
             $owner->date,
             $owner->device_status,
             $owner->created_at->format('Y-m-d H:i:s'),

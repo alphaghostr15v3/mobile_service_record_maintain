@@ -70,6 +70,7 @@
                     <th>Device</th>
                     <th>Work</th>
                     <th>IMEI</th>
+                    <th>Doc</th>
                     <th>Invoice</th>
                     <th>Date</th>
                     <th>Device Status</th>
@@ -88,6 +89,15 @@
                     <td>{{$customer->mobile_name}}</td>
                     <td>{{$customer->work ?? 'N/A'}}</td>
                     <td>{{$customer->imei_number ?? 'N/A'}}</td>
+                    <td>
+                        @if($customer->document)
+                            <a href="{{ Storage::url($customer->document) }}" target="_blank" class="text-primary" title="View Document">
+                                <i class="fas fa-file-alt fa-lg"></i>
+                            </a>
+                        @else
+                            <span class="text-muted opacity-50"><i class="fas fa-minus small"></i></span>
+                        @endif
+                    </td>
                     <td>{{$customer->invoice_bill ?? 'N/A'}}</td>
                     <td>{{$customer->date}}</td>
                     <td>

@@ -15,5 +15,6 @@ class ShopOwner extends Model
         'imei_number',
         'date',
         'device_status',
+        'document',
     ];
 }

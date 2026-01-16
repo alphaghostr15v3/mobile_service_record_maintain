@@ -27,6 +27,7 @@
                 <th>Device</th>
                 <th>Work</th>
                 <th>IMEI</th>
+                <th>Doc</th>
                 <th>Date</th>
                 <th>Status</th>
             </tr>
@@ -41,6 +42,7 @@
                 <td>{{ $owner->mobile_name }}</td>
                 <td>{{ $owner->work }}</td>
                 <td>{{ $owner->imei_number }}</td>
+                <td>{{ $owner->document ? 'Yes' : 'No' }}</td>
                 <td>{{ $owner->date }}</td>
                 <td>{{ $owner->device_status }}</td>
             </tr>

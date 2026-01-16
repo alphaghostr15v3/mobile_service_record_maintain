@@ -70,6 +70,7 @@
                     <th>Device</th>
                     <th>Work</th>
                     <th>IMEI</th>
+                    <th>Doc</th>
                     <th>Date</th>
                     <th>Device Status</th>
                     <th class="text-end">Actions</th>
@@ -87,6 +88,15 @@
                     <td>{{$owner->mobile_name}}</td>
                     <td>{{$owner->work ?? 'N/A'}}</td>
                     <td>{{$owner->imei_number ?? 'N/A'}}</td>
+                    <td>
+                        @if($owner->document)
+                            <a href="{{ Storage::url($owner->document) }}" target="_blank" class="text-primary" title="View Document">
+                                <i class="fas fa-file-alt fa-lg"></i>
+                            </a>
+                        @else
+                            <span class="text-muted opacity-50"><i class="fas fa-minus small"></i></span>
+                        @endif
+                    </td>
                     <td>{{$owner->date}}</td>
                     <td>
                         <span class="badge {{ $owner->device_status == 'Listed' ? 'badge-listed' : 'badge-blacklisted' }} rounded-pill px-3 py-2">

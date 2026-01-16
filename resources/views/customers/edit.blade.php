@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="glass-card">
-            <form action="{{route('customers.update', $customer->id)}}" method="POST">
+            <form action="{{route('customers.update', $customer->id)}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="row g-4">
@@ -52,11 +52,21 @@
                         <input type="date" name="date" class="form-control rounded-3 py-2" value="{{$customer->date}}" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold small text-uppercase">Device Status</label>
-                        <select name="device_status" class="form-select rounded-3 py-2">
-                            <option value="Listed" {{$customer->device_status == 'Listed' ? 'selected' : ''}}>Listed</option>
-                            <option value="Blacklisted" {{$customer->device_status == 'Blacklisted' ? 'selected' : ''}}>Blacklisted</option>
-                        </select>
+                        <label class="form-label fw-bold small text-uppercase">Current Document</label>
+                        <div>
+                            @if($customer->document)
+                                <a href="{{ Storage::url($customer->document) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                                    <i class="fas fa-eye me-1"></i> View Document
+                                </a>
+                            @else
+                                <span class="text-muted small">No document uploaded</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase">Update Document</label>
+                        <input type="file" name="document" class="form-control rounded-3 py-2">
+                        <div class="form-text small text-muted">PDF, JPG, PNG (Max 5MB)</div>
                     </div>
                     <div class="col-12 mt-5">
                         <button type="submit" class="btn btn-primary px-5">

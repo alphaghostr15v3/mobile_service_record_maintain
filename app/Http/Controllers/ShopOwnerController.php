@@ -7,6 +7,7 @@ use App\Models\ShopOwner;
 use App\Exports\ShopOwnerExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class ShopOwnerController extends Controller
 {
@@ -56,9 +57,15 @@ class ShopOwnerController extends Controller
             'work' => 'nullable',
             'date' => 'required|date',
             'device_status' => 'required',
+            'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        ShopOwner::create($request->all());
+        $data = $request->all();
+        if ($request->hasFile('document')) {
+            $data['document'] = $request->file('document')->store('documents', 'public');
+        }
+
+        ShopOwner::create($data);
 
         return redirect()->route('shop-owners.index')->with('success', 'Shop Owner record created successfully.');
     }
@@ -82,15 +89,27 @@ class ShopOwnerController extends Controller
             'work' => 'nullable',
             'date' => 'required|date',
             'device_status' => 'required',
+            'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        $shopOwner->update($request->all());
+        $data = $request->all();
+        if ($request->hasFile('document')) {
+            if ($shopOwner->document) {
+                Storage::disk('public')->delete($shopOwner->document);
+            }
+            $data['document'] = $request->file('document')->store('documents', 'public');
+        }
+
+        $shopOwner->update($data);
 
         return redirect()->route('shop-owners.index')->with('success', 'Shop Owner record updated successfully.');
     }
 
     public function destroy(ShopOwner $shopOwner)
     {
+        if ($shopOwner->document) {
+            Storage::disk('public')->delete($shopOwner->document);
+        }
         $shopOwner->delete();
 
         return redirect()->route('shop-owners.index')->with('success', 'Shop Owner record deleted successfully.');

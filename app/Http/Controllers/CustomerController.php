@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Exports\CustomerExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -57,9 +58,15 @@ class CustomerController extends Controller
             'work' => 'nullable',
             'date' => 'required|date',
             'device_status' => 'required',
+            'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        Customer::create($request->all());
+        $data = $request->all();
+        if ($request->hasFile('document')) {
+            $data['document'] = $request->file('document')->store('documents', 'public');
+        }
+
+        Customer::create($data);
 
         return redirect()->route('customers.index')->with('success', 'Customer record created successfully.');
     }
@@ -83,15 +90,27 @@ class CustomerController extends Controller
             'work' => 'nullable',
             'date' => 'required|date',
             'device_status' => 'required',
+            'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
-        $customer->update($request->all());
+        $data = $request->all();
+        if ($request->hasFile('document')) {
+            if ($customer->document) {
+                Storage::disk('public')->delete($customer->document);
+            }
+            $data['document'] = $request->file('document')->store('documents', 'public');
+        }
+
+        $customer->update($data);
 
         return redirect()->route('customers.index')->with('success', 'Customer record updated successfully.');
     }
 
     public function destroy(Customer $customer)
     {
+        if ($customer->document) {
+            Storage::disk('public')->delete($customer->document);
+        }
         $customer->delete();
 
         return redirect()->route('customers.index')->with('success', 'Customer record deleted successfully.');

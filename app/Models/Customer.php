@@ -16,5 +16,6 @@ class Customer extends Model
         'invoice_bill',
         'date',
         'device_status',
+        'document',
     ];
 }

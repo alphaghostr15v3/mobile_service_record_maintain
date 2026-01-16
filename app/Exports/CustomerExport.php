@@ -55,12 +55,13 @@ class CustomerExport implements FromQuery, WithHeadings, WithMapping
             'Name',
             'Aadhar Number',
             'Mobile Number',
-            'Mobile Name',
+            'Device',
             'Work',
-            'IMEI Number',
+            'IMEI',
+            'Document',
             'Invoice Bill',
             'Date',
-            'Device Status',
+            'Status',
             'Created At'
         ];
     }
@@ -75,6 +76,7 @@ class CustomerExport implements FromQuery, WithHeadings, WithMapping
             $customer->mobile_name,
             $customer->work,
             $customer->imei_number,
+            $customer->document ? 'Uploaded' : 'None',
             $customer->invoice_bill,
             $customer->date,
             $customer->device_status,

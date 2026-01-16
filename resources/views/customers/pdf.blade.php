@@ -27,6 +27,7 @@
                 <th>Device</th>
                 <th>Work</th>
                 <th>IMEI</th>
+                <th>Doc</th>
                 <th>Invoice</th>
                 <th>Date</th>
                 <th>Status</th>
@@ -42,6 +43,7 @@
                 <td>{{ $customer->mobile_name }}</td>
                 <td>{{ $customer->work }}</td>
                 <td>{{ $customer->imei_number }}</td>
+                <td>{{ $customer->document ? 'Yes' : 'No' }}</td>
                 <td>{{ $customer->invoice_bill }}</td>
                 <td>{{ $customer->date }}</td>
                 <td>{{ $customer->device_status }}</td>

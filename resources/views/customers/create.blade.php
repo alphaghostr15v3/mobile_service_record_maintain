@@ -15,7 +15,8 @@
 <div class="row">
     <div class="col-lg-8">
         <div class="glass-card">
-            <form action="{{route('customers.store')}}" method="POST">
+            <div class="card-body p-4">
+            <form action="{{route('customers.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row g-4">
                     <div class="col-md-6">
@@ -57,12 +58,17 @@
                             <option value="Blacklisted">Blacklisted</option>
                         </select>
                     </div>
-                    <div class="col-12 mt-5">
-                        <button type="submit" class="btn btn-primary px-5">
-                            <i class="fas fa-save me-2"></i> Save Record
-                        </button>
-                        <a href="{{route('customers.index')}}" class="btn btn-light ms-2 px-5">Cancel</a>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold small text-uppercase">Upload Document</label>
+                        <input type="file" name="document" class="form-control rounded-3 py-2">
+                        <div class="form-text small text-muted">PDF, JPG, PNG (Max 5MB)</div>
                     </div>
+                </div>
+                <div class="mt-5">
+                    <button type="submit" class="btn btn-primary px-5">
+                        <i class="fas fa-save me-2"></i> Save Record
+                    </button>
+                    <a href="{{route('customers.index')}}" class="btn btn-light ms-2 px-5">Cancel</a>
                 </div>
             </form>
         </div>
